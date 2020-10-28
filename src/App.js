@@ -17,7 +17,7 @@ function App() {
       url: url
     };
 
-    axios.post(`http://98.242.245.160:5000/`, data)
+    axios.post(`https://link-itt.herokuapp.com/`, data)
       .then(res => {
         console.log(res.data[0]);
         setUrl(res.data[0])
