@@ -2,7 +2,6 @@ import React, {useState} from 'react'
 import logo from './logo.png';
 import './App.css';
 import axios from 'axios';
-import { render } from '@testing-library/react';
 function App() {
   const [url, setUrl] = useState("")
   const [shortLink, setShortLink] = useState(false)
