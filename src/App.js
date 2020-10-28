@@ -42,7 +42,7 @@ function App() {
   
   let shortUrl;
   if (shortLink){
-    shortUrl = <div><input type="text" id="url" value = {`http://98.242.245.160:5000/${url.shortID}`} /><button onClick={copyText()}>Copy text</button></div>
+    shortUrl = <div><input type="text" id="url" value = {`https://link-itt.herokuapp.com/${url.shortID}`} /><button onClick={copyText()}>Copy text</button></div>
   } else {
   }
   return (
