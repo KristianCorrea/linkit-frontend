@@ -29,43 +29,35 @@ function App() {
   }
 
   function copyText() {
-    /* Get the text field */
-    var copyText = document.getElementById("url");
+    if (document.getElementById("shortUrl")){
+      /* Get the text field */
+      var copyText = document.getElementById("shortUrl");
   
-    /* Select the text field */
-    copyText.select();
-    copyText.setSelectionRange(0, 99999); /*For mobile devices*/
-  
-    /* Copy the text inside the text field */
-    document.execCommand("copy");
+      /* Select the text field */
+      copyText.select();
+      copyText.setSelectionRange(0, 99999); /*For mobile devices*/
+    
+      /* Copy the text inside the text field */
+      document.execCommand("copy");
+    }
+    
   } 
   
   let shortUrl;
   if (shortLink){
-    shortUrl = <div><input type="text" id="url" value = {`https://link-itt.herokuapp.com/${url.shortID}`} /><button onClick={copyText()}>Copy text</button></div>
+    shortUrl = <div><input style={{width: `11%`}} readonly type="text" id="shortUrl" value = {`https://link-itt.herokuapp.com/${url.shortID}`} /><button onClick= {copyText}>Copy text</button></div>
   } else {
   }
   return (
     <div className="App">
-      <header className="">
         <img src={logo} style={{width: "10%"}}className="" alt="logo" />
         <form action="" onSubmit={handleSubmit}>
-          <input class="input-group mb-3" type="url" name="url" id="url" onChange={handleChange}></input>
+          <input style= {{width: "30%"}} type="url" name="url" id="url" onChange={handleChange}></input>
           <button type="submit">link it</button>
         </form>
         
         <br/>
         {shortUrl}
-        
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
     </div>
   );
 }
