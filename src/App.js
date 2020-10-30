@@ -3,7 +3,7 @@ import logo from './logo.png';
 import './App.css';
 import axios from 'axios';
 import Loader from 'react-loader-spinner'
-const currentAppUrl = `http://localhost:5000/`
+const currentAppUrl = `https://link-itt.herokuapp.com/`
 function App() {
   const [url, setUrl] = useState("")
   const [shortLink, setShortLink] = useState(false)
