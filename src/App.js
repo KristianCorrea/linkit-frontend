@@ -88,7 +88,7 @@ function App() {
         <br/>
         
         {shortUrl}
-        {userLinks.length == 0 ? null : <UserLinks userLinks = {userLinks}/>}
+        {userLinks.length === 0 ? null : <UserLinks userLinks = {userLinks}/>}
     </div>
   );
 }
