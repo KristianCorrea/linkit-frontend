@@ -3,12 +3,15 @@ import logo from './logo.png';
 import './App.css';
 import axios from 'axios';
 import Loader from 'react-loader-spinner'
+// const currentAppUrl = `http://localhost:5000/`
 const currentAppUrl = `https://link-itt.herokuapp.com/`
 function App() {
   const [url, setUrl] = useState("")
   const [shortLink, setShortLink] = useState(false)
   const [generatingLink, setGeneratingLink] = useState(false)
   const [userLinks, setUserLinks] = useState([])
+  const [viewVisitors, setViewVisitors] = useState(false)
+  const [visitorData, setVisitorData] = useState([])
 
   useEffect(() => {
     axios.get(`${currentAppUrl}userLinks`)
@@ -22,6 +25,15 @@ function App() {
         setUserLinks(res.data)
       })
   }, [shortLink])
+
+  const handleView = (shortID) =>{
+    setViewVisitors(true)
+    axios.get(`${currentAppUrl}${shortID}/visitors`)
+      .then(res => {
+        setVisitorData(res.data)
+      })
+
+  }
 
   const handleChange = event => {
     setUrl(event.target.value)
@@ -88,13 +100,41 @@ function App() {
         <br/>
         
         {shortUrl}
-        {userLinks.length === 0 ? null : <UserLinks userLinks = {userLinks}/>}
+        {(userLinks.length === 0 || viewVisitors === true) ? null : <UserLinks userLinks = {userLinks} handleView={handleView}/>}
+        {console.log(viewVisitors)}
+        {viewVisitors === true ? <URLVisitors visitorData = {visitorData} setViewVisitors = {setViewVisitors}/>: null}
     </div>
   );
 }
 
+function URLVisitors(props) {
+  const { visitorData, setViewVisitors } = props
+  console.log(visitorData, "YES")
+  return(
+    <div>
+      <table align="center">
+        <tr>
+          <th>Visitor's IP Address</th>
+          <th>Date Visited</th>
+        </tr>
+        {visitorData.map((visitor)=>{
+          return(
+            <tr>
+              <th>{visitor.visitedBy}</th>
+              <th>{visitor.created_at}</th>
+            </tr>
+          )
+        })}
+      </table>
+      <button onClick = {() => setViewVisitors(false)}>Close</button>
+    </div>
+  )
+}
+
 function UserLinks(props) {
-  const userLinks = props.userLinks
+  const {userLinks, handleView} = props
+
+  
   return(
     <div>
       <table align="center">
@@ -109,8 +149,8 @@ function UserLinks(props) {
             <th><a href={`${currentAppUrl}${shortUrl.shortID}`}>{currentAppUrl}{shortUrl.shortID}</a></th> |
             <th><a href={`${shortUrl.url}`}>{shortUrl.url}</a></th> |
             <th>{shortUrl.visits}</th>
+            {shortUrl.visits > 0 ? <button onClick={() => handleView(shortUrl.shortID)}>View</button> : null}
           </tr>
-
             )
         })}
         
